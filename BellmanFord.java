@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
 import static java.util.Collections.reverse;
@@ -15,7 +14,7 @@ public class BellmanFord implements Search {
     String result = "Bellman-Ford:\n";
     String[] path;
     int cost;
-    Integer[] dist;
+    Double[] dist;
     String[] vertices;
     String[] backtrace;
 
@@ -40,16 +39,16 @@ public class BellmanFord implements Search {
         setup(src, graph);
         int size = graph.nodes().size();
         backtrace = new String[size];
-        //could figure out how to do this without 3 for loops
+        //couldn't figure out how to do this without 3 for loops
         for (int i = 0; i < size - 1; i++) {
             for (String node : graph.nodes()) {
                 for (String edge : graph.edges(node)) {
-                    double weight = graph.weight(node, edge);
-                    double nodeDist = graph.nodes().indexOf(node);
-                    double edgeDist = graph.nodes().indexOf(edge);
-                    if (dist[(int) nodeDist] != Integer.MAX_VALUE && dist[(int) edgeDist] > (int) (nodeDist + weight)) {
-                        dist[(int) edgeDist] = (int) (nodeDist + weight);
-                        backtrace[(int) edgeDist] = node;
+                    Double weight = graph.weight(node, edge);
+                    int nodeDist = graph.nodes().indexOf(node);
+                    int edgeDist = graph.nodes().indexOf(edge);
+                    if (dist[edgeDist] > (int) (dist[nodeDist] + weight)) {
+                        dist[edgeDist] = (dist[nodeDist] + weight);
+                        backtrace[edgeDist] = node;
                     }
                 }
             }
@@ -58,10 +57,10 @@ public class BellmanFord implements Search {
             return result + "Negative Cycle Detected";
         }
         path = getPath(src, dest, graph);
-        cost = dist[graph.nodes().indexOf(dest)];
-        ///TODO:cost incorrect
+        Double costResult = dist[graph.nodes().indexOf(dest)];
+        cost = costResult.intValue();
         return result + "Shortest Path: "
-                + Arrays.toString(path) + "\n Cost:" + cost;
+                + Arrays.toString(path) + "\nCost:" + cost;
     }
 
     /**
@@ -73,17 +72,17 @@ public class BellmanFord implements Search {
      */
     public void setup(String src, Digraph graph) {
         vertices = graph.nodes().toArray(new String[0]);
-        dist = new Integer[graph.nodes().size()];
+        dist = new Double[graph.nodes().size()];
         for (int i = 0; i < graph.nodes().size(); i++) {
-            dist[i] = Integer.MAX_VALUE;
+            dist[i] = Double.MAX_VALUE;
         }
-        dist[graph.nodes().indexOf(src)] = 0;
+        dist[graph.nodes().indexOf(src)] = 0.0;
     }
 
     /**
      *
-     * @param src 1st node in path
-     * @param dest 2nd node in path
+     * @param src   1st node in path
+     * @param dest  2nd node in path
      * @param graph graph to search
      * @return the shortest path from src to dest
      */
@@ -104,8 +103,8 @@ public class BellmanFord implements Search {
      * @return true if there is a negative cycle, false otherwise
      */
     public boolean checkNegCycle() {
-        for (Integer integer : dist) {
-            if (integer < 0) {
+        for (Double value : dist) {
+            if (value < 0) {
                 return true;
             }
         }

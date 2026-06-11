@@ -68,6 +68,8 @@ public class Dijkstras implements Search {
     public String search(String src, String dest, Digraph graph) {
         if (src == null || dest == null || graph == null) {
             return null;
+        } else if (!graph.nodes().contains(src) || !graph.nodes().contains(dest)) {
+            return null;
         }
         setup(src, graph);
         while (!pq.isEmpty()) {
@@ -95,9 +97,9 @@ public class Dijkstras implements Search {
                 }
             }
         }
-        //May need to return string array of path
+        int costResult = (int)Math.round(cost);
         return result + "Shortest Path: "
-                + Arrays.toString(path) + "\nCost:" + cost;
+                + Arrays.toString(path) + "\nCost:" + costResult;
     }
 
     /**

@@ -364,7 +364,7 @@ public class DWGraph {
      * sets the Search field to the best algorithm to handle the search query,
      * and returns a Path representing the shortest path.
      *
-     * @param src 1st node in the path
+     * @param src  1st node in the path
      * @param dest 2nd node in the path
      * @return the shortest path from src to dest
      */
@@ -383,7 +383,7 @@ public class DWGraph {
         } else if (src.equals(all) && dest.equals(all)) {
             Search = new FloydWarshall().search(src, dest, graph);
         }
-        Search = new BellmanFord().search(src, dest, graph);
+        Search = new Dijkstras().search(src, dest, graph);
         return Search;
 
     }
