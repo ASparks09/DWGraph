@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -52,8 +53,8 @@ public class Baconator extends DWGraph {
     public static String[] getPaths(DWGraph graph) {
         String src = randomNodes(graph);
         String dest = randomNodes(graph);
-        String output = graph.search(src, dest);
-        return graph.parsePath(output);
+        Search.Path output = graph.search(src, dest);
+        return output.path();
     }
 
     /**

@@ -72,15 +72,15 @@ public class TestJson extends DWGraph {
         System.out.println(result.toString());
         assertEquals(0, result.size());
     }
-**/
+*
     @Test
     public void TestBellman(){
         DWGraph result = new DWGraph("src\\16-node-sample.json");
 
         System.out.print(result.search("Ray", "Rowena"));
-        System.out.println("\n" + Arrays.toString(result.parsePath(result.search("Ray", "Rowena"))));
+        System.out.println("\n" + Arrays.toString(result.parsePath(String.valueOf(result.search("Ray", "Rowena")))));
        // result.search("Ray", "Rowena", result);
       //  System.out.println(result.search("Ray", "Rowena", result));
 
-    }
+    }**/
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Should be instantuated if src and dest are the exact string "<ALL>"
@@ -13,23 +12,24 @@ public class FloydWarshall implements Search {
     Boolean hasNegativeCycle = false;
 
      /**
-     * Floyd Warshall Algorithm
-     * if src or dest is not in the graph, return null
-     * if src and dest are the same, return the path from src to dest
-     * if any parameter is null, return null
-     * @param src starting node
-     * @param dest destination node
-     * @param graph graph to search
-     * @return shortest path from src to dest in String format and cost
-     */
+      * Floyd Warshall Algorithm
+      * if src or dest is not in the graph, return null
+      * if src and dest are the same, return the path from src to dest
+      * if any parameter is null, return null
+      *
+      * @param src   starting node
+      * @param dest  destination node
+      * @param graph graph to search
+      * @return shortest path from src to dest in String format and cost
+      */
     @Override
-    public String search(String src, String dest, Digraph graph) {
+    public Path search(String src, String dest, Digraph graph) {
         if (src == null || dest == null || graph == null) {
             return null;
         } else if (!graph.nodes().contains(src) || !graph.nodes().contains(dest)) {
             return null;
         } else if (src.equals(dest)) {
-            return result + "Shortest Path: " + src + "\n Cost: 0";
+            return new Path(src, dest, 0, graph, new String[]{src});
         }
         ArrayList<String> nodes = graph.nodes();
         int size = nodes.size();
@@ -40,8 +40,7 @@ public class FloydWarshall implements Search {
         hasNegativeCycle = checkNegatives();
         this.cost = dist[nodes.indexOf(src)][nodes.indexOf(dest)].intValue();
         this.path = getPath(src, dest, nodes);
-        return result + "Shortest Path: "
-                + Arrays.toString(path) + "\nCost:" + cost;
+        return new Path(src, dest, cost, graph, path);
     }
 
     /**

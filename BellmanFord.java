@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import static java.util.Collections.reverse;
@@ -30,7 +29,7 @@ public class BellmanFord implements Search {
      * @return shortest path from src to dest in String format and cost
      */
     @Override
-    public String search(String src, String dest, Digraph graph) {
+    public Path search(String src, String dest, Digraph graph) {
         if (src == null || dest == null || graph == null) {
             return null;
         } else if (!graph.nodes().contains(src) || !graph.nodes().contains(dest)) {
@@ -54,13 +53,12 @@ public class BellmanFord implements Search {
             }
         }
         if (checkNegCycle()) {
-            return result + "Negative Cycle Detected";
+            return new Path(src, dest, -1, graph, null);
         }
         path = getPath(src, dest, graph);
         Double costResult = dist[graph.nodes().indexOf(dest)];
         cost = costResult.intValue();
-        return result + "Shortest Path: "
-                + Arrays.toString(path) + "\nCost:" + cost;
+        return new Path(src, dest, cost, graph, path);
     }
 
     /**

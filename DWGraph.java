@@ -18,7 +18,7 @@ public class DWGraph {
     private int size;
     private double mtxThreshold;
     private double lstThreshold;
-    private String Search;
+    private Search.Path Search;
 
     /**
      * Constructor
@@ -368,7 +368,7 @@ public class DWGraph {
      * @param dest 2nd node in the path
      * @return the shortest path from src to dest
      */
-    public String search(String src, String dest) {
+    public Search.Path search(String src, String dest) {
         String all = "<ALL>";
         if (graph == null) {
             return null;
@@ -377,7 +377,6 @@ public class DWGraph {
         } else if (!this.graph.nodes().contains(src) || !this.graph.nodes().contains(dest)) {
             return null;
         }
-        //might need to return path in string[]
         if (hasNegative()) {
             Search = new BellmanFord().search(src, dest, graph);
         } else if (src.equals(all) && dest.equals(all)) {
@@ -410,14 +409,15 @@ public class DWGraph {
      * Helper method
      *
      * @return the string array representation of the path
-     */
+     *
     public String[] parsePath(String path) {
         String[] pathArray = path.split("\\[");
         String[] pathArray2 = pathArray[1].split("]");
         pathArray2[0] = pathArray2[0].replace(" ", "");
         return pathArray2[0].split(",");
-
     }
+*/
+
 
 }
 

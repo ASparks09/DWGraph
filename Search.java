@@ -8,5 +8,6 @@
  *
  */
 public interface Search {
-    public String search(String src, String dest, Digraph graph);
+    public Path search(String src, String dest, Digraph graph);
+    public record Path (String src, String dest, int cost, Digraph graph, String[] path){}
 }
