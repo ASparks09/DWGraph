@@ -39,14 +39,14 @@ public class DWGraph {
         if (filepath == null) {
             DWGraph graph = new DWGraph();
         } else {
-        DWGraph graph = load(filepath);
-        if (graph == null) {
-            graph = new DWGraph();
-        }
-        this.graph = graph.graph;
-        this.size = 0;
-        mtxThreshold = 0.6;
-        lstThreshold = 0.3;
+            DWGraph graph = load(filepath);
+            if (graph == null) {
+                graph = new DWGraph();
+            }
+            this.graph = graph.graph;
+            this.size = 0;
+            mtxThreshold = 0.6;
+            lstThreshold = 0.3;
         }
     }
 
@@ -74,8 +74,8 @@ public class DWGraph {
         if (weight == null) {
             return false;
         } //else if (edges(dest).contains(src) || edges(src).contains(dest)) {
-          //  return false;
-       // }
+        //  return false;
+        // }
         boolean result = this.graph.add(src, dest, weight);
         convert();
         return result;
@@ -338,13 +338,14 @@ public class DWGraph {
             this.size = updatedGraph.size();
         } else if (this.graph.density() < lstThreshold) {
             AdjList updatedGraph = new AdjList();
-            this.graph =  convert(updatedGraph);
+            this.graph = convert(updatedGraph);
             this.size = updatedGraph.size();
         }
     }
 
     /**
      * Helper method
+     *
      * @param newGraph the graph to be updated
      * @return the updated version of the graph
      */
@@ -362,9 +363,10 @@ public class DWGraph {
      * method search(String src, String dest) that analyzes the current graph,
      * sets the Search field to the best algorithm to handle the search query,
      * and returns a Path representing the shortest path.
-     * @param src
-     * @param dest
-     * @return
+     *
+     * @param src 1st node in the path
+     * @param dest 2nd node in the path
+     * @return the shortest path from src to dest
      */
     public String search(String src, String dest) {
         String all = "<ALL>";
@@ -376,18 +378,19 @@ public class DWGraph {
             return null;
         }
         //might need to return path in string[]
-        if(hasNegative()){
-            Search = new BellmanFord().search(src,dest,graph);
-        } else if(src.equals(all) && dest.equals(all)){
-            Search = new FloydWarshall().search(src,dest,graph);
+        if (hasNegative()) {
+            Search = new BellmanFord().search(src, dest, graph);
+        } else if (src.equals(all) && dest.equals(all)) {
+            Search = new FloydWarshall().search(src, dest, graph);
         }
-        Search = new Dijkstras().search(src,dest,graph);
+        Search = new BellmanFord().search(src, dest, graph);
         return Search;
 
     }
 
     /**
      * Helper method
+     *
      * @return true if the graph has negative weights, false otherwise
      */
     public boolean hasNegative() {
@@ -405,9 +408,10 @@ public class DWGraph {
 
     /**
      * Helper method
+     *
      * @return the string array representation of the path
      */
-    public String[] parsePath(String path){
+    public String[] parsePath(String path) {
         String[] pathArray = path.split("\\[");
         String[] pathArray2 = pathArray[1].split("]");
         pathArray2[0] = pathArray2[0].replace(" ", "");
