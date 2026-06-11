@@ -7,7 +7,6 @@ import java.util.*;
  * edge weights in the graph.
  */
 public class Dijkstras implements Search {
-    String result = "Dijkstra's:\n";
     String[] path;
     Double cost;
     ArrayList<String> knownNode = new ArrayList<>();

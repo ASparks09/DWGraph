@@ -10,6 +10,7 @@
  * implementation to information is passed to by implementing the interface.
  */
 
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 

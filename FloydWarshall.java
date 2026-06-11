@@ -4,7 +4,6 @@ import java.util.ArrayList;
  * Should be instantuated if src and dest are the exact string "<ALL>"
  */
 public class FloydWarshall implements Search {
-    String result = "Floyd Warshall:\n";
     String[] path;
     int cost;
     Double[][] dist;
@@ -87,7 +86,7 @@ public class FloydWarshall implements Search {
                 for (int j = 0; j < size; j++) {
                     if(dist[i][k] + dist[k][j] < dist[i][j]){
                         dist[i][j] = dist[i][k] + dist[k][j];
-                        vertices[i][j] = vertices[k][j];
+                        vertices[i][j] = vertices[i][k];
                     }
                 }
             }
@@ -117,7 +116,6 @@ public class FloydWarshall implements Search {
             i = vertices[i][j];
             path.add(nodes.get(i));
         }
-        //Not returning the path just source and destination
         return path.toArray(new String[path.size()]);
     }
 

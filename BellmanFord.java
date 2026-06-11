@@ -10,7 +10,6 @@ import static java.util.Collections.reverse;
  * edge weights in the graph.
  */
 public class BellmanFord implements Search {
-    String result = "Bellman-Ford:\n";
     String[] path;
     int cost;
     Double[] dist;
@@ -37,14 +36,15 @@ public class BellmanFord implements Search {
         }
         setup(src, graph);
         int size = graph.nodes().size();
+        ArrayList<String> nodes = graph.nodes();
         backtrace = new String[size];
         //couldn't figure out how to do this without 3 for loops
         for (int i = 0; i < size - 1; i++) {
-            for (String node : graph.nodes()) {
+            for (String node : nodes) {
                 for (String edge : graph.edges(node)) {
                     Double weight = graph.weight(node, edge);
-                    int nodeDist = graph.nodes().indexOf(node);
-                    int edgeDist = graph.nodes().indexOf(edge);
+                    int nodeDist = nodes.indexOf(node);
+                    int edgeDist = nodes.indexOf(edge);
                     if (dist[edgeDist] > (int) (dist[nodeDist] + weight)) {
                         dist[edgeDist] = (dist[nodeDist] + weight);
                         backtrace[edgeDist] = node;
@@ -56,7 +56,7 @@ public class BellmanFord implements Search {
             return new Path(src, dest, -1, graph, null);
         }
         path = getPath(src, dest, graph);
-        Double costResult = dist[graph.nodes().indexOf(dest)];
+        Double costResult = dist[nodes.indexOf(dest)];
         cost = costResult.intValue();
         return new Path(src, dest, cost, graph, path);
     }
@@ -69,12 +69,13 @@ public class BellmanFord implements Search {
      * @param graph graph to search
      */
     public void setup(String src, Digraph graph) {
-        vertices = graph.nodes().toArray(new String[0]);
-        dist = new Double[graph.nodes().size()];
-        for (int i = 0; i < graph.nodes().size(); i++) {
+        ArrayList<String> nodes = graph.nodes();
+        vertices = nodes.toArray(new String[0]);
+        dist = new Double[nodes.size()];
+        for (int i = 0; i < nodes.size(); i++) {
             dist[i] = Double.MAX_VALUE;
         }
-        dist[graph.nodes().indexOf(src)] = 0.0;
+        dist[nodes.indexOf(src)] = 0.0;
     }
 
     /**
